@@ -1,5 +1,5 @@
 #app.py
-from flask import Flask, request, jsonify, redirect, render_template, make_response, url_for
+from flask import Flask, Response,request, jsonify, redirect, render_template, make_response, url_for
 import sqlite3
 import bcrypt
 from flask_jwt_extended import JWTManager, verify_jwt_in_request, create_access_token, jwt_required, get_jwt_identity, decode_token
@@ -18,7 +18,49 @@ load_dotenv()
 
 app = Flask(__name__)
 
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
+import time
 
+
+# ------------------ METRICS ------------------
+
+# Count total requests
+REQUEST_COUNT = Counter(
+    'app_requests_total',
+    'Total HTTP requests',
+    ['method', 'endpoint']
+)
+
+# Track request latency
+REQUEST_LATENCY = Histogram(
+    'app_request_latency_seconds',
+    'Request latency',
+    ['endpoint']
+)
+
+# ------------------ HOOKS ------------------
+
+@app.before_request
+def start_timer():
+    # Store start time
+    request.start_time = time.time()
+
+@app.after_request
+def record_metrics(response):
+    # Avoid tracking /metrics itself
+    if request.path != "/metrics":
+        resp_time = time.time() - request.start_time
+
+        REQUEST_LATENCY.labels(request.path).observe(resp_time)
+        REQUEST_COUNT.labels(request.method, request.path).inc()
+
+    return response
+
+
+# 🔥 METRICS ENDPOINT
+@app.route('/metrics')
+def metrics():
+    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 
 
 # Secure session settings
@@ -308,7 +350,7 @@ google = oauth.register(
 
 @app.route("/login/google")
 def google_login():
-    return google.authorize_redirect("http://13.127.5.234:5000/callback")
+    return google.authorize_redirect("http://nullarena.duckdns.org:5000/callback")
 
 @app.route("/callback")
 def callback():
@@ -871,7 +913,47 @@ def get_scoreboard():
         })
 
     return {"teams": teams}
+'''
+#metrics
+from flask import  Response
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
+
+# Metrics
+REQUEST_COUNT = Counter(
+    'app_requests_total',
+    'Total HTTP requests',
+    ['method', 'endpoint']
+)
+
+REQUEST_LATENCY = Histogram(
+    'app_request_latency_seconds',
+    'Request latency',
+    ['endpoint']
+)
+
+# Track every request
+@app.before_request
+def before_request():
+    request.start_time = REQUEST_LATENCY.labels(request.path).time()
+
+@app.after_request
+def after_request(response):
+    REQUEST_COUNT.labels(request.method, request.path).inc()
+    request.start_time.observe_duration()
+    return response
+
+# Your existing route
+@app.route('/landing')
+def landing():
+    return "Landing Page"
+
+# 🔥 Metrics route
+@app.route('/metrics')
+def metrics():
+    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
+
+'''
 # ---------------- RUN ----------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=5000)
