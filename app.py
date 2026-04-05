@@ -308,8 +308,7 @@ google = oauth.register(
 
 @app.route("/login/google")
 def google_login():
-    return google.authorize_redirect("http://127.0.0.1:5000/callback")
-
+    return google.authorize_redirect("http://13.127.5.234:5000/callback")
 
 @app.route("/callback")
 def callback():
@@ -875,4 +874,4 @@ def get_scoreboard():
 
 # ---------------- RUN ----------------
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0",port=5000)

@@ -1,0 +1,9 @@
+flask
+bcrypt
+flask-jwt-extended
+flask-limiter
+authlib
+python-dotenv
+itsdangerous
+werkzeug
+requests
