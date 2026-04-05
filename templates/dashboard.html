@@ -1,0 +1,109 @@
+<!--dashboard.html-->
+<!doctype html>
+<html>
+  <head>
+    <title>CTF Dashboard</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css" />
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <div class="navbar">
+      <div class="nav-left">
+        <div class="nav-item">🏁</div>
+        <div class="nav-item" data-action="users">Users</div>
+        <div class="nav-item" data-action="scoreboard">Scoreboard</div>
+        <div class="nav-item" data-action="challenges">Challenges</div>
+      </div>
+
+      <div class="nav-right">
+        <div
+          class="nav-item"
+          id="admin-btn"
+          data-action="admin"
+          style="display: none"
+        >
+          Admin panel
+        </div>
+        <div class="nav-item" data-action="team">Team</div>
+        <div class="nav-item" data-action="profile">Profile</div>
+        <div class="nav-item" data-action="logout">logout</div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="container">
+      <!-- 🔥 WELCOME SCREEN -->
+      <div id="welcomeScreen">
+        <h1 class="welcome-text">Welcome to NULL ARENA</h1>
+      </div>
+
+      <!-- 🔥 TERMINAL + CONTENT (hidden initially) -->
+      <div id="mainContent" style="display: none">
+        <div id="terminalLine">user@ctf:~$ show challenges</div>
+        <div id="container"></div>
+      </div>
+    </div>
+
+    <!-- TEAM SECTION -->
+    <div id="teamSection" style="display: none">
+      <!-- OPTIONS -->
+      <div id="teamOptions">
+        <button id="showCreate">Create Team</button>
+        <button id="showJoin">Join Team</button>
+        <button id="closeTeamBtn">✖</button>
+      </div>
+
+      <!-- CREATE -->
+      <div id="createTeamBox" style="display: none">
+        <h2>Create Team</h2>
+        <input id="team_name" placeholder="Team Name" />
+        <input id="team_pass" placeholder="Password" />
+        <button id="createBtn">Create</button>
+      </div>
+
+      <!-- JOIN -->
+      <div id="joinTeamBox" style="display: none">
+        <input id="join_name" placeholder="Team Name" />
+        <input id="join_pass" placeholder="Password" />
+        <button id="joinBtn">Join</button>
+      </div>
+
+      <!-- TEAM INFO -->
+      <div id="teamInfo" style="display: none">
+        <h1 id="teamTitle"></h1>
+
+        <div id="teamStats">
+          <div>Total Points: <span id="teamPoints"></span></div>
+        </div>
+
+        <h3>Members</h3>
+
+        <div id="teamTable">
+          <div class="row header">
+            <div>Name</div>
+            <div>Score</div>
+          </div>
+
+          <div id="teamMembers"></div>
+        </div>
+      </div>
+    </div>
+    <div id="challengeModal" class="modal hidden">
+      <div class="modal-box">
+        <div class="modal-header">
+          <span id="modalTitle"></span>
+          <span class="close-btn" id="closeModal">✖</span>
+        </div>
+
+        <p><b>Author:</b> <span id="modalAuthor"></span></p>
+        <p><b>Points:</b> <span id="modalPoints"></span></p>
+        <p id="modalDesc"></p>
+
+        <input id="flagInput" placeholder="Enter flag..." />
+        <button id="submitFlag">Submit</button>
+      </div>
+    </div>
+    <script src="/static/js/dashboard.js"></script>
+  </body>
+</html>

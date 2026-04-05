@@ -1,0 +1,61 @@
+<!--teams.html-->
+<!doctype html>
+<html>
+  <head>
+    <title>Teams</title>
+
+    <link rel="stylesheet" href="/static/css/teams.css" />
+  </head>
+
+  <body>
+    <!-- 🔝 NAVBAR (if you already have one, keep it here) -->
+    <div id="navbar">
+      <a href="/dashboard">Dashboard</a>
+      <a href="/teams">Teams</a>
+      <a href="/scoreboard">Scoreboard</a>
+      <a href="/challenges">Challenges</a>
+    </div>
+
+    <!-- ✅ CENTERED PAGE CONTENT -->
+    <div id="pageContent">
+      <div id="teamSection">
+        <!-- 🔥 ACTION BUTTONS -->
+        <div class="team-actions">
+          <button onclick="showCreate()">Create Team</button>
+          <button onclick="showJoin()">Join Team</button>
+          <button id="closeTeamBtn">✖</button>
+        </div>
+
+        <!-- ✅ CREATE TEAM -->
+        <div class="team-form" id="createTeamBox">
+          <input id="create_name" type="text" placeholder="Team Name" />
+          <input id="create_pass" type="password" placeholder="Password" />
+          <button onclick="createTeam()">Create</button>
+        </div>
+
+        <!-- ✅ JOIN TEAM -->
+        <div class="team-form" id="joinTeamBox" style="display: none">
+          <input id="join_name" type="text" placeholder="Team Name" />
+          <input id="join_pass" type="password" placeholder="Password" />
+          <button onclick="joinTeam()">Join</button>
+        </div>
+
+        <!-- ✅ TEAM INFO -->
+        <div
+          id="teamInfo"
+          style="display: none; text-align: center; margin-top: 30px"
+        >
+          <h2 id="teamName"></h2>
+
+          <!-- 🔥 ADD THIS -->
+          <h3>Total Points: <span id="totalPoints">0</span></h3>
+
+          <div id="teamMembers"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JS -->
+    <script src="{{ url_for('static', filename='js/teams.js') }}"></script>
+  </body>
+</html>

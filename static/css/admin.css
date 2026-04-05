@@ -1,0 +1,154 @@
+/*admin.css*/
+body {
+  margin: 0;
+  background: #000;
+  color: #00ff88;
+  font-family: monospace;
+}
+
+/* NAVBAR */
+.navbar {
+  background: #111;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #00ff88;
+}
+
+.nav-left, .nav-right {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-item {
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  text-shadow: 0 0 8px #00ff88;
+}
+
+/* CONTAINER */
+.container {
+  padding: 30px;
+}
+
+/* TABS */
+.tabs {
+  margin-bottom: 20px;
+}
+
+
+.tab-btn {
+  background: none;
+  border: none;          
+  color: #00ff88;
+  cursor: pointer;
+  padding: 6px 10px;
+  font-family: monospace;
+}
+
+.tab-btn:hover {
+  text-decoration: underline; 
+}
+
+.tab-btn:focus {
+  outline: none;   
+}     
+/* TERMINAL */
+.terminal {
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  width: 60%;
+}
+
+input, textarea {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  background: #000;
+  border: 1px solid #00ff88;
+  color: #00ff88;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: #000;
+  border: 1px solid #00ff88;
+  color: #00ff88;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #00ff88;
+  color: #000;
+}
+
+/* GRID */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  background: #111;
+  border: 1px solid #00ff88;
+  width: 220px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+}
+
+.card:hover {
+  background: #00ff88;
+  color: #000;
+}
+
+/* LOGS */
+.log {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #00ff88;
+  padding: 5px;
+}
+
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 5px;
+  margin: 8px 0;
+  font-family: monospace;
+  color: #00ff88;
+
+  /* 🔥 remove box look */
+  border: none;
+  background: none;
+
+  /* ✅ add subtle separator */
+  border-bottom: 1px solid rgba(0, 255, 136, 0.5);
+}
+
+.score-row:hover {
+  background: rgba(0, 255, 136, 0.15);
+}
+
+.add-btn {
+  background: transparent;
+  border: 1px solid #00ff88;
+  color: #00ff88;
+  padding: 10px 18px;
+  font-family: monospace;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+  width: 250px;
+}
+
+.add-btn:hover {
+  background: #00ff88;
+}

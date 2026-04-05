@@ -1,0 +1,63 @@
+<!--index.html-->
+<!doctype html>
+<html>
+  <head>
+    <title>CTF Terminal</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/index.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="terminal-window">
+      <div class="title-bar">
+        <div class="buttons">
+          <div class="btn red"></div>
+          <div class="btn yellow"></div>
+          <div class="btn green"></div>
+        </div>
+      </div>
+
+      <div class="terminal-body">
+        <!-- LOGIN -->
+
+        <div id="loginBox">
+          <div class="prompt">user@ctf:~$ login</div>
+
+          <input id="loginEmail" placeholder="email" />
+          <input id="loginPassword" type="password" placeholder="password" />
+
+          <!-- ✅ ADD HERE -->
+          <a href="/forgot-password" class="forgot-link"> forgot password? </a>
+
+          <button data-action="login">Execute</button>
+          <button data-action="google">Login with Google</button>
+
+          <div class="link" data-action="showSignup">
+            not registered → signup
+          </div>
+        </div>
+
+        <!-- SIGNUP -->
+        <div id="signupBox" style="display: none">
+          <div class="prompt">user@ctf:~$ signup</div>
+
+          <input id="name" placeholder="name" />
+          <input id="email" placeholder="email" />
+          <input id="signupPassword" type="password" placeholder="password" />
+
+          <button data-action="signup">Execute</button>
+
+          <div class="link" data-action="showLogin">
+            already registered → login
+          </div>
+        </div>
+
+        <div id="result"></div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+  </body>
+</html>
