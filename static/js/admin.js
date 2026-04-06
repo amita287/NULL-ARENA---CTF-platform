@@ -218,10 +218,15 @@ function loadChallenges() {
           const card = document.createElement("div");
           card.className = "card";
 
-          card.innerHTML = `
-            <div>${ch.title}</div>
-            <div class="points">${ch.points}</div>
-          `;
+          const titleDiv = document.createElement("div");
+          titleDiv.textContent = ch.title;
+
+          const pointsDiv = document.createElement("div");
+          pointsDiv.className = "points";
+          pointsDiv.textContent = ch.points;
+
+          card.appendChild(titleDiv);
+          card.appendChild(pointsDiv);
 
           card.addEventListener("click", () => openAdminModal(ch.id));
 
@@ -265,16 +270,33 @@ function loadLogs() {
 
       let html = "<h2>System Logs</h2>";
 
-      data.logs.forEach(log => {
-        html += `
-          <div class="log">
-            <div><b>${log.email}</b></div>
-            <div>${log.action}</div>
-            <div style="font-size:12px;">${log.time}</div>
-          </div>
-        `;
-      });
+      const logsContainer = document.getElementById("logsContainer");
+logsContainer.innerHTML = "";
 
-      document.getElementById("logsContainer").innerHTML = html;
+const heading = document.createElement("h2");
+heading.textContent = "System Logs";
+logsContainer.appendChild(heading);
+
+data.logs.forEach(log => {
+  const logDiv = document.createElement("div");
+  logDiv.className = "log";
+
+  const emailDiv = document.createElement("div");
+  const bold = document.createElement("b");
+  bold.textContent = log.email;        // attacker-controlled — must be textContent
+  emailDiv.appendChild(bold);
+
+  const actionDiv = document.createElement("div");
+  actionDiv.textContent = log.action;  // also attacker-controlled
+
+  const timeDiv = document.createElement("div");
+  timeDiv.style.fontSize = "12px";
+  timeDiv.textContent = log.time;
+
+  logDiv.appendChild(emailDiv);
+  logDiv.appendChild(actionDiv);
+  logDiv.appendChild(timeDiv);
+  logsContainer.appendChild(logDiv);
+});
     });
 }

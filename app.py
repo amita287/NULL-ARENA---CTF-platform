@@ -308,7 +308,7 @@ google = oauth.register(
 
 @app.route("/login/google")
 def google_login():
-    return google.authorize_redirect("http://127.0.0.1:5000/callback")
+    return google.authorize_redirect("http://nullarena.duckdns.org:5000/callback")
 
 
 @app.route("/callback")
@@ -653,9 +653,10 @@ def create_team():
     cur = conn.cursor()
 
     try:
+        hashed_team_pw = bcrypt.hashpw(data["password"].encode(), bcrypt.gensalt())
         cur.execute(
-            "INSERT INTO teams (name, password) VALUES (?, ?)",
-            (data["name"], data["password"])
+        "INSERT INTO teams (name, password) VALUES (?, ?)",
+            (data["name"], hashed_team_pw.decode())
         )
         team_id = cur.lastrowid
 
@@ -709,11 +710,8 @@ def join_team():
         })
 
     # 🔐 check password
-    if team[1] != data["password"]:
-        return jsonify({
-            "success": False,
-            "error": "Wrong password"
-        })
+    if not bcrypt.checkpw(data["password"].encode(), team[1].encode()):
+        return jsonify({"success": False, "error": "Wrong password"})
 
     team_id = team[0]
 

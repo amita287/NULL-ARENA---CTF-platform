@@ -125,10 +125,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const row = document.createElement("div");
         row.className = "user-row";
 
-        row.innerHTML = `
-          <div>${index + 1}. ${user.name}</div>
-          <div>${user.score}</div>
-        `;
+        const nameDiv = document.createElement("div");
+        nameDiv.textContent = `${index + 1}. `;
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = user.name;
+        nameDiv.appendChild(nameSpan);
+
+const scoreDiv = document.createElement("div");
+scoreDiv.textContent = user.score;
+
+row.appendChild(nameDiv);
+row.appendChild(scoreDiv);
 
         table.appendChild(row);
       });
@@ -200,15 +207,23 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("teamTitle").innerText = team.name;
     document.getElementById("teamPoints").innerText = team.points;
 
-    let html = "";
+    const membersContainer = document.getElementById("teamMembers");
+    membersContainer.innerHTML = "";  // safe — clearing, not injecting
+
     team.members.forEach(m => {
-      html += `
-        <div class="row">
-          <div>${m.name}</div>
-          <div>${m.score}</div>
-        </div>
-      `;
-    });
+    const memberRow = document.createElement("div");
+    memberRow.className = "row";
+
+    const nameDiv = document.createElement("div");
+    nameDiv.textContent = m.name;
+
+    const scoreDiv = document.createElement("div");
+    scoreDiv.textContent = m.score;
+
+    memberRow.appendChild(nameDiv);
+    memberRow.appendChild(scoreDiv);
+    membersContainer.appendChild(memberRow);
+});
 
     document.getElementById("teamMembers").innerHTML = html;
   }
@@ -236,10 +251,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const row = document.createElement("div");
         row.className = "user-row";
 
-        row.innerHTML = `
-          <div>${index + 1}. ${team.name}</div>
-          <div>${team.score}</div>
-        `;
+        const nameDiv = document.createElement("div");
+        nameDiv.textContent = `${index + 1}. `;
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = team.name;
+        nameDiv.appendChild(nameSpan);
+
+        const scoreDiv = document.createElement("div");
+        scoreDiv.textContent = team.score;
+
+        row.appendChild(nameDiv);
+        row.appendChild(scoreDiv);
 
         table.appendChild(row);
       });
@@ -329,10 +351,15 @@ container.innerHTML = `
             const card = document.createElement("div");
             card.className = ch.solved ? "card solved" : "card";
 
-            card.innerHTML = `
-              <div>${ch.title}</div>
-              <div class="points">${ch.points}</div>
-            `;
+            const titleDiv = document.createElement("div");
+            titleDiv.textContent = ch.title;
+
+            const pointsDiv = document.createElement("div");
+            pointsDiv.className = "points";
+            pointsDiv.textContent = ch.points;
+
+            card.appendChild(titleDiv);
+            card.appendChild(pointsDiv);
 
             // ✅ FIXED CLICK
             card.addEventListener("click", () => openModal(ch));
